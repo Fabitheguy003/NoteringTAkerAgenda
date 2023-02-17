@@ -28,3 +28,20 @@ app.get('/api/notes', (req, res) => {
   });
 });
 
+// POST route for creating a new note
+app.post('/api/notes', (req, res) => {
+  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    if (err) throw err;
+    const notes = JSON.parse(data);
+    const newNote = {
+      id: Math.floor(Math.random() * 1000),
+      title: req.body.title,
+      text: req.body.text
+    };
+    notes.push(newNote);
+    fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => {
+      if (err) throw err;
+      res.json(newNote);
+    });
+  });
+});
