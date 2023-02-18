@@ -1,4 +1,4 @@
-# NoteringTAkerAgenda
+# Notering-taker-agenda
 
 # Note taker
   
