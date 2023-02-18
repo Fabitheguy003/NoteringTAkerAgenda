@@ -45,3 +45,23 @@ app.post('/api/notes', (req, res) => {
     });
   });
 });
+
+// DELETE route for deleting a note
+app.delete('/api/notes/:id', (req, res) => {
+  const noteId = parseInt(req.params.id);
+  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    if (err) throw err;
+    const notes = JSON.parse(data);
+    const filteredNotes = notes.filter(note => note.id !== noteId);
+    fs.writeFile('./db/db.json', JSON.stringify(filteredNotes), (err) => {
+      if (err) throw err;
+      res.send('Note deleted successfully');
+    });
+  });
+});
+
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server listening on http://localhost:${PORT}`);
+});
